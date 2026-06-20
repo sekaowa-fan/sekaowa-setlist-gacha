@@ -41,6 +41,42 @@ button{
 
 <h1>SEKAI NO OWARI<br>SETLIST GACHA</h1>
 
+本編の曲数：
+<select id="mainCount">
+<option value="10">10曲</option>
+<option value="11">11曲</option>
+<option value="12">12曲</option>
+<option value="13">13曲</option>
+<option value="14">14曲</option>
+<option value="15">15曲</option>
+<option value="16">16曲</option>
+<option value="17">17曲</option>
+<option value="18" selected>18曲</option>
+<option value="19">19曲</option>
+<option value="20">20曲</option>
+<option value="21">21曲</option>
+<option value="22">22曲</option>
+<option value="23">23曲</option>
+<option value="24">24曲</option>
+<option value="25">25曲</option>
+</select>
+
+<br><br>
+
+アンコールの曲数：
+<select id="encoreCount">
+<option value="0">なし</option>
+<option value="1">1曲</option>
+<option value="2" selected>2曲</option>
+<option value="3">3曲</option>
+<option value="4">4曲</option>
+<option value="5">5曲</option>
+<option value="6">6曲</option>
+<option value="7">7曲</option>
+</select>
+
+<br><br>
+
 <button onclick="generateSetlist()">
 セットリスト生成
 </button>
@@ -153,19 +189,32 @@ function shuffle(array){
 
 function generateSetlist(){
 
-    if(songs.length < 20){
+    const mainCount = Number(
+        document.getElementById("mainCount").value
+    );
+
+    const encoreCount = Number(
+        document.getElementById("encoreCount").value
+    );
+
+
+    if(songs.length < mainCount + encoreCount){
         document.getElementById("result").innerHTML =
-        "曲数が20曲未満です。20曲以上登録してください。";
+        "登録曲数が足りません。";
         return;
     }
+
 
     let pool=[...songs];
 
     shuffle(pool);
 
-    const main = pool.slice(0,18);
-    const encore = pool.slice(18,20);
+    const main = pool.slice(0, mainCount);
 
+    const encore = pool.slice(
+        mainCount,
+        mainCount + encoreCount
+    );
     let html="";
 
     html += "<h2>【本編】</h2>";
