@@ -7,23 +7,30 @@
 
 <style>
 body{
-    background:#111;
+    background:linear-gradient(135deg,#050510,#1b1238);
     color:white;
     font-family:sans-serif;
     text-align:center;
     padding:20px;
+    min-height:100vh;
 }
 
 h1{
     margin-bottom:20px;
+    text-shadow:
+    0 0 10px #fff,
+    0 0 20px #7b5cff;
 }
 
 button{
     font-size:20px;
-    padding:12px 24px;
+    padding:15px 40px;
     border:none;
-    border-radius:10px;
+    border-radius:30px;
     cursor:pointer;
+    background:#7b5cff;
+    color:white;
+    box-shadow:0 0 20px #7b5cff;
 }
 
 #result{
@@ -33,7 +40,18 @@ button{
     margin-left:auto;
     margin-right:auto;
     line-height:1.8;
+
+    background:rgba(255,255,255,0.08);
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 0 30px rgba(120,80,255,0.5);
 }
+
+    select{
+    font-size:18px;
+    padding:8px;
+    border-radius:10px;
+    }
 </style>
 </head>
 
