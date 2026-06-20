@@ -244,7 +244,7 @@ function shuffle(array){
     }
 }
 
-function weightedPick(array){
+function weightedPick(array, mode="normal"){
 
     let weighted=[];
 
@@ -253,19 +253,32 @@ function weightedPick(array){
         let weight=1;
 
 
-        // 定番曲は3倍
+        // ライブ定番曲
         if(standardSongs.includes(song)){
-            weight=3;
+            weight *= 3;
         }
 
 
-        // レア曲は0.3倍
+        // レア曲
         if(rareSongs.includes(song)){
-            weight=0.3;
+            weight *= 0.3;
         }
 
 
-        for(let i=0;i<weight;i++){
+        // 1曲目補正
+        if(mode === "opening" && standardSongs.includes(song)){
+            weight *= 3;
+        }
+
+
+        // ラスト補正
+        if(mode === "ending" && endingSongs.includes(song)){
+            weight *= 5;
+        }
+
+
+        // 小数対応
+        for(let i=0;i<Math.round(weight*10);i++){
             weighted.push(song);
         }
 
@@ -303,15 +316,15 @@ let main=[];
 
 
 // 1曲目
-main.push(weightedPick(pool));
-
+main.push(weightedPick(pool,"opening"));
+    
 pool = pool.filter(
 song=>song !== main[0]
 );
 
 
 // 残り本編
-while(main.length < mainCount){
+while(main.length < mainCount - 1){
 
 let pick = weightedPick(pool);
 
@@ -322,6 +335,16 @@ song=>song !== pick
 );
 
 }
+
+
+// 本編ラスト
+let lastSong = weightedPick(pool,"ending");
+
+main.push(lastSong);
+
+pool = pool.filter(
+song=>song !== lastSong
+);
 
 
 // アンコール
