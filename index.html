@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SEKAI NO OWARI セトリガチャ</title>
+</head>
+
+<body>
+
+<h1>SEKAI NO OWARI セトリガチャ</h1>
+
+<button onclick="gacha()">
+ガチャを引く
+</button>
+
+<h2 id="result">ここに曲名が出ます</h2>
+
+<script>
+const songs = [
+"幻の命",
+"虹色の戦争",
+"白昼の夢",
+"スターライトパレード",
+"RPG",
+"Dragon Night",
+"Habit",
+"最高到達点"
+];
+
+function gacha() {
+const song =
+songs[Math.floor(Math.random()*songs.length)];
+
+document.getElementById("result").innerText = song;
+}
+</script>
+
+</body>
+</html>
