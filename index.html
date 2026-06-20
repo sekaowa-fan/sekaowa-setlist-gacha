@@ -207,7 +207,7 @@ const rareSongs = [
 "向日葵",
 "千夜一夜物語",
 "Missing",
-"蜜の月",
+"蜜の月 (for the film)",
 "夜桜",
 "Blue Flower",
 "LOVE SONG",
@@ -337,14 +337,27 @@ song=>song !== pick
 }
 
 
-// 本編ラスト
-let lastSong = weightedPick(pool,"ending");
+while(encore.length < encoreCount - 1){
 
-main.push(lastSong);
+let pick = weightedPick(pool);
+
+encore.push(pick);
 
 pool = pool.filter(
-song=>song !== lastSong
+song=>song !== pick
 );
+
+}
+
+
+// アンコール最後
+if(encoreCount > 0){
+
+let lastEncore = weightedPick(pool,"ending");
+
+encore.push(lastEncore);
+
+}
 
 
 // アンコール
