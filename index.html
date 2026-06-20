@@ -254,7 +254,7 @@ let timer = setInterval(() => {
 
         let encoreIndex = index - main.length - 1;
 
-        output += `${encoreIndex + 19}. ${encore[encoreIndex]}<br>`;
+        output += `${main.length + encoreIndex + 1}. ${encore[encoreIndex]}<br>`;
         document.getElementById("result").innerHTML = output;
 
         index++;
