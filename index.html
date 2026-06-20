@@ -179,6 +179,63 @@ const songs = [
 "図鑑",
 "Stella"
 ];
+// ライブ定番曲（出やすくする）
+const standardSongs = [
+"スターライトパレード",
+"Habit",
+"Fight Music",
+"Dragon Night",
+"Dropout",
+"スターゲイザー"
+];
+
+
+// レア曲（出にくくする）
+const rareSongs = [
+"死の魔法",
+"白昼の夢",
+"Never Ending World",
+"花鳥風月",
+"yume",
+"生物学的幻想曲",
+"TONIGHT",
+"深い森",
+"broken bone",
+"Home",
+"YOKOHAMA blues",
+"Mr.Heartache",
+"向日葵",
+"千夜一夜物語",
+"Missing",
+"蜜の月",
+"夜桜",
+"Blue Flower",
+"LOVE SONG",
+"Re:set",
+"Food",
+"ドッペルゲンガー",
+"エデン",
+"コードレスベイビー",
+"カレイドスコープ",
+"バードマン",
+"陽炎",
+"正夢",
+"family",
+"エンドロール",
+"バタフライエフェクト",
+"ROBO",
+"深海魚",
+"ユートピア",
+"琥珀"
+];
+
+
+// ラスト候補曲（最後に出やすくする）
+const endingSongs = [
+"Dragon Night",
+"インスタントラジオ",
+"Fight Music"
+];
 
 function shuffle(array){
     for(let i=array.length-1;i>0;i--){
@@ -187,6 +244,40 @@ function shuffle(array){
     }
 }
 
+function weightedPick(array){
+
+    let weighted=[];
+
+    array.forEach(song=>{
+
+        let weight=1;
+
+
+        // 定番曲は3倍
+        if(standardSongs.includes(song)){
+            weight=3;
+        }
+
+
+        // レア曲は0.3倍
+        if(rareSongs.includes(song)){
+            weight=0.3;
+        }
+
+
+        for(let i=0;i<weight;i++){
+            weighted.push(song);
+        }
+
+    });
+
+
+    return weighted[
+        Math.floor(Math.random()*weighted.length)
+    ];
+
+}
+    
 function generateSetlist(){
 
     const mainCount = Number(
@@ -206,15 +297,49 @@ function generateSetlist(){
 
 
     let pool=[...songs];
+　　
 
-    shuffle(pool);
+    let pool=[...songs];
 
-    const main = pool.slice(0, mainCount);
+let main=[];
 
-    const encore = pool.slice(
-        mainCount,
-        mainCount + encoreCount
-    );
+
+// 1曲目
+main.push(weightedPick(pool));
+
+pool = pool.filter(
+song=>song !== main[0]
+);
+
+
+// 残り本編
+while(main.length < mainCount){
+
+let pick = weightedPick(pool);
+
+main.push(pick);
+
+pool = pool.filter(
+song=>song !== pick
+);
+
+}
+
+
+// アンコール
+let encore=[];
+
+while(encore.length < encoreCount){
+
+let pick = weightedPick(pool);
+
+encore.push(pick);
+
+pool = pool.filter(
+song=>song !== pick
+);
+
+}
     let html="";
 
     html += "<h2>【本編】</h2>";
