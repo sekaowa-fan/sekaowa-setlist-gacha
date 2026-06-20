@@ -345,21 +345,6 @@ function generateSetlist(){
 
 let pool=[...songs];
 
-
-// 指定曲を必ず入れる
-let fixedSongs = [];
-
-document.querySelectorAll(".fixedSong").forEach(input=>{
-
-    let song = input.value.trim();
-
-    if(song && songs.includes(song)){
-        fixedSongs.push(song);
-    }
-
-});
-
-
 let main=[];
 
 
