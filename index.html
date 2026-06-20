@@ -95,6 +95,20 @@ button{
 
 <br><br>
 
+必ず入れる曲（最大5曲）：
+
+<br>
+
+<input class="fixedSong" type="text" placeholder="1曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="2曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="3曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="4曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="5曲目">
+
 <button onclick="generateSetlist()">
 セットリスト生成
 </button>
@@ -331,14 +345,51 @@ function generateSetlist(){
 
 let pool=[...songs];
 
+
+// 指定曲を必ず入れる
+let fixedSongs = [];
+
+document.querySelectorAll(".fixedSong").forEach(input=>{
+
+    let song = input.value.trim();
+
+    if(song && songs.includes(song)){
+        fixedSongs.push(song);
+    }
+
+});
+
+
 let main=[];
 
-// 1曲目
-main.push(weightedPick(pool,"opening"));
-    
-pool = pool.filter(
-song=>song !== main[0]
-);
+
+// 指定曲を先に追加
+fixedSongs.forEach(song=>{
+
+    if(pool.includes(song)){
+
+        main.push(song);
+
+        pool = pool.filter(
+            s => s !== song
+        );
+
+    }
+
+});
+
+// 指定曲がない場合だけ1曲目抽選
+if(main.length === 0){
+
+    let opening = weightedPick(pool,"opening");
+
+    main.push(opening);
+
+    pool = pool.filter(
+    song=>song !== opening
+    );
+
+}
 
 
 // 残り本編
