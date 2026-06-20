@@ -99,7 +99,7 @@ button{
 
 <br><br>
 
-必ず入れる曲（最大5曲）：
+必ず入れる曲（最大10曲）：
 
 <br>
 
@@ -116,6 +116,69 @@ button{
 <input class="fixedSong" type="text" placeholder="4曲目">
 <br>
 <input class="fixedSong" type="text" placeholder="5曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="6曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="7曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="8曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="9曲目">
+<br>
+<input class="fixedSong" type="text" placeholder="10曲目">
+
+<br><br>
+
+
+セトリ除外曲（最大20曲）：
+
+<br>
+
+<small>※正式名称で書いてください</small>
+
+<br>
+
+<input class="excludeSong" type="text" placeholder="1曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="2曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="3曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="4曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="5曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="6曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="7曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="8曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="9曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="10曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="11曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="12曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="13曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="14曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="15曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="16曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="17曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="18曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="19曲目">
+<br>
+<input class="excludeSong" type="text" placeholder="20曲目">
+
+<br><br>
 
 <button onclick="generateSetlist()">
 セットリスト生成
@@ -352,6 +415,25 @@ function generateSetlist(){
 
 
 let pool=[...songs];
+
+// 除外曲を取得
+let excludeSongs = [];
+
+document.querySelectorAll(".excludeSong").forEach(input=>{
+
+    let song = input.value.trim();
+
+    if(song && songs.includes(song)){
+        excludeSongs.push(song);
+    }
+
+});
+
+
+// 除外曲をプールから削除
+pool = pool.filter(
+song => !excludeSongs.includes(song)
+);
 
 let main=[];
 
