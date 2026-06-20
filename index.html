@@ -337,19 +337,6 @@ song=>song !== pick
 }
 
 
-while(encore.length < encoreCount - 1){
-
-let pick = weightedPick(pool);
-
-encore.push(pick);
-
-pool = pool.filter(
-song=>song !== pick
-);
-
-}
-
-
 // アンコール
 let encore=[];
 
