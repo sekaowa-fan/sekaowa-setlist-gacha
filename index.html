@@ -363,17 +363,19 @@ document.querySelectorAll(".fixedSong").forEach(input=>{
 let main=[];
 
 
-// 指定曲を先に追加
-fixedSongs.forEach(song=>{
+// 指定曲を保存
+let fixedSongs = [];
 
-    if(pool.includes(song)){
+document.querySelectorAll(".fixedSong").forEach(input=>{
 
-        main.push(song);
+    let song = input.value.trim();
+
+    if(song && songs.includes(song)){
+        fixedSongs.push(song);
 
         pool = pool.filter(
             s => s !== song
         );
-
     }
 
 });
@@ -393,7 +395,7 @@ if(main.length === 0){
 
 
 // 残り本編
-while(main.length < mainCount){
+while(main.length < mainCount - fixedSongs.length){
 
 let pick = weightedPick(pool);
 
@@ -404,6 +406,17 @@ song=>song !== pick
 );
 
 }
+
+// 指定曲をランダム位置へ配置
+fixedSongs.forEach(song=>{
+
+    let position = Math.floor(
+        Math.random() * (main.length + 1)
+    );
+
+    main.splice(position,0,song);
+
+});
 
 
 // アンコール
