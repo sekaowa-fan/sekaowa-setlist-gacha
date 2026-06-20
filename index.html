@@ -180,7 +180,21 @@ function generateSetlist(){
         html += `${index+19}. ${song}<br>`;
     });
 
-    document.getElementById("result").innerHTML = html;
+    document.getElementById("result").innerHTML =
+"<h2>OPENING...</h2>";
+
+setTimeout(() => {
+
+    document.getElementById("result").innerHTML =
+    "<h2>LIVE START</h2>";
+
+    setTimeout(() => {
+
+        document.getElementById("result").innerHTML = html;
+
+    }, 1000);
+
+}, 1000);
 }
 
 </script>
