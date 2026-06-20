@@ -1,38 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>SEKAI NO OWARI セトリガチャ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKAI NO OWARI セットリストガチャ</title>
+
+<style>
+body{
+    background:#111;
+    color:white;
+    font-family:sans-serif;
+    text-align:center;
+    padding:20px;
+}
+
+h1{
+    margin-bottom:20px;
+}
+
+button{
+    font-size:20px;
+    padding:12px 24px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#result{
+    margin-top:30px;
+    text-align:left;
+    max-width:700px;
+    margin-left:auto;
+    margin-right:auto;
+    line-height:1.8;
+}
+</style>
 </head>
 
 <body>
 
-<h1>SEKAI NO OWARI セトリガチャ</h1>
+<h1>SEKAI NO OWARI<br>SETLIST GACHA</h1>
 
-<button onclick="gacha()">
-ガチャを引く
+<button onclick="generateSetlist()">
+セットリスト生成
 </button>
 
-<h2 id="result">ここに曲名が出ます</h2>
+<div id="result"></div>
 
 <script>
+
 const songs = [
 "幻の命",
 "虹色の戦争",
+"インスタントラジオ",
+"青い太陽",
+"死の魔法",
+"世界平和",
 "白昼の夢",
+"天使と悪魔",
+"ファンタジー",
+"花鳥風月",
+"不死鳥",
+"Never Ending World",
 "スターライトパレード",
+"yume",
+"眠り姫",
+"生物学的幻想曲",
+"Illusion",
+"Love the warz (rearranged)",
+"TONIGHT",
+"炎の戦士",
+"Fight Music",
+"深い森",
 "RPG",
+"アースチャイルド",
+"Death Disco",
+"スノーマジックファンタジー",
+"銀河街の悪夢",
+"炎と森のカーニバル",
+"ピエロ",
 "Dragon Night",
+"MAGIC",
+"ムーンライトステーション",
+"マーメイドラプソディー",
+"broken bone",
+"PLAY",
+"ANTI-HERO",
+"Home",
+"SOS",
+"プレゼント",
+"Hey Ho",
+"Error",
+"RAIN",
+"スターゲイザー",
+"サザンカ",
+"イルミネーション",
+"YOKOHAMA blues",
+"Mr.Heartache",
+"向日葵",
+"千夜一夜物語",
+"ラフレシア",
+"Goodbye",
+"Missing",
+"蜜の月 (for the film)",
+"LOVE SONG",
+"Blue Flower",
+"夜桜",
+"Monsoon Night",
+"Food",
+"Re:set",
+"ドッペルゲンガー",
+"エデン",
+"すべてが壊れた夜に",
+"Witch",
+"Dropout",
+"umbrella",
+"周波数",
+"silent",
+"コードレスベイビー",
+"カレイドスコープ",
+"バードマン",
+"tears",
+"Like a scent",
+"陽炎",
+"正夢",
+"family",
+"Diary",
+"エンドロール (色彩)",
 "Habit",
-"最高到達点"
+"Eve",
+"サラバ",
+"ターコイズ",
+"バタフライエフェクト",
+"ROBO",
+"最高到達点",
+"タイムマシン",
+"デッドエンド",
+"深海魚",
+"ユートピア",
+"Romantic",
+"琥珀",
+"図鑑",
+"Stella"
 ];
 
-function gacha() {
-const song =
-songs[Math.floor(Math.random()*songs.length)];
-
-document.getElementById("result").innerText = song;
+function shuffle(array){
+    for(let i=array.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [array[i],array[j]]=[array[j],array[i]];
+    }
 }
+
+function generateSetlist(){
+
+    if(songs.length < 20){
+        document.getElementById("result").innerHTML =
+        "曲数が20曲未満です。20曲以上登録してください。";
+        return;
+    }
+
+    let pool=[...songs];
+
+    shuffle(pool);
+
+    const main = pool.slice(0,18);
+    const encore = pool.slice(18,20);
+
+    let html="";
+
+    html += "<h2>【本編】</h2>";
+
+    main.forEach((song,index)=>{
+        html += `${index+1}. ${song}<br>`;
+    });
+
+    html += "<br><h2>【Encore】</h2>";
+
+    encore.forEach((song,index)=>{
+        html += `${index+19}. ${song}<br>`;
+    });
+
+    document.getElementById("result").innerHTML = html;
+}
+
 </script>
 
 </body>
