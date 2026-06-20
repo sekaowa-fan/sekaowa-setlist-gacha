@@ -56,6 +56,27 @@ button{
     small{
     color:#aaa;
     }
+
+    details{
+    max-width:700px;
+    margin:20px auto;
+    text-align:left;
+
+    background:rgba(255,255,255,0.05);
+    border-radius:15px;
+    padding:15px;
+}
+
+summary{
+    cursor:pointer;
+    font-size:20px;
+    font-weight:bold;
+    text-align:center;
+}
+
+summary::-webkit-details-marker{
+    display:none;
+}
 </style>
 </head>
 
@@ -97,6 +118,12 @@ button{
 <option value="7">7曲</option>
 </select>
 
+<details>
+
+<summary>⚙️ 設定</summary>
+
+<br>
+    
 <br><br>
 
 必ず入れる曲（最大10曲）：
@@ -179,6 +206,8 @@ button{
 <input class="excludeSong" type="text" placeholder="20曲目">
 
 <br><br>
+
+</details>
 
 <button onclick="generateSetlist()">
 セットリスト生成
