@@ -170,85 +170,6 @@ summary::-webkit-details-marker{
     
 <br><br>
 
-必ず入れる曲（最大10曲）：
-
-<br>
-
-<small>※正式名称で書いてください</small>
-
-<br>
-
-<input class="fixedSong" type="text" placeholder="1曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="2曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="3曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="4曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="5曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="6曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="7曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="8曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="9曲目">
-<br>
-<input class="fixedSong" type="text" placeholder="10曲目">
-
-<br><br>
-
-
-セトリ除外曲（最大20曲）：
-
-<br>
-
-<small>※正式名称で書いてください</small>
-
-<br>
-
-<input class="excludeSong" type="text" placeholder="1曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="2曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="3曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="4曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="5曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="6曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="7曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="8曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="9曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="10曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="11曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="12曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="13曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="14曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="15曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="16曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="17曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="18曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="19曲目">
-<br>
-<input class="excludeSong" type="text" placeholder="20曲目">
-
 <br><br>
 
 </details>
@@ -500,21 +421,51 @@ function generateSetlist(){
     
 let pool=[...songs];
 
-// 除外曲を取得
+let fixedSongs = [];
 let excludeSongs = [];
+let positionSongs = [];
 
-document.querySelectorAll(".excludeSong").forEach(input=>{
+document.querySelectorAll(".settingCard")
+.forEach(card=>{
 
-    let song = input.value.trim();
+    let song =
+    card.querySelector(".songName")
+    .value.trim();
 
-    if(song && songs.includes(song)){
+    let mode =
+    card.querySelector(".songMode")
+    .value;
+
+    let positionInput =
+    card.querySelector(".songPosition")
+    .value.trim();
+
+    if(!song || !songs.includes(song))
+    return;
+
+    if(mode === "fixed"){
+
+        fixedSongs.push(song);
+
+    }
+
+    else if(mode === "exclude"){
+
         excludeSongs.push(song);
+
+    }
+
+    else if(mode === "position"){
+
+        positionSongs.push({
+            song:song,
+            position:positionInput
+        });
+
     }
 
 });
-
-
-// 除外曲をプールから削除
+    
 pool = pool.filter(
 song => !excludeSongs.includes(song)
 );
@@ -522,22 +473,7 @@ song => !excludeSongs.includes(song)
 let main=[];
 
 
-// 指定曲を保存
-let fixedSongs = [];
 
-document.querySelectorAll(".fixedSong").forEach(input=>{
-
-    let song = input.value.trim();
-
-    if(song && songs.includes(song)){
-        fixedSongs.push(song);
-
-        pool = pool.filter(
-            s => s !== song
-        );
-    }
-
-});
 
 // 指定曲がない場合だけ1曲目抽選
 if(main.length === 0){
