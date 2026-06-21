@@ -672,21 +672,47 @@ function showSavedSetlists(){
 
     saved.forEach((item,index)=>{
 
-        html += `
-        <hr>
-        <h3>${item.title}</h3>
+     html += `
+<hr>
 
-        ${item.date}
+<h3>${item.title}</h3>
 
-        <br><br>
+${item.date}
 
-        ${item.setlist}
-        `;
+<br><br>
+
+${item.setlist}
+
+<br>
+
+<button onclick="deleteSetlist(${index})">
+🗑削除
+</button>
+
+`;
 
     });
 
     document.getElementById("result")
     .innerHTML = html;
+}
+
+function deleteSetlist(index){
+
+    let saved = JSON.parse(
+        localStorage.getItem("savedSetlists")
+        || "[]"
+    );
+
+    saved.splice(index,1);
+
+    localStorage.setItem(
+        "savedSetlists",
+        JSON.stringify(saved)
+    );
+
+    showSavedSetlists();
+
 }
     
 </script>
