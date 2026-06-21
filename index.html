@@ -122,6 +122,24 @@ summary::-webkit-details-marker{
 
 <summary>⚙️ 設定</summary>
 
+<table id="settingTable">
+
+<tr>
+<th>曲名</th>
+<th>モード</th>
+<th>位置</th>
+</tr>
+
+</table>
+
+<br>
+
+<button type="button" onclick="addSettingRow()">
+＋行を追加
+</button>
+
+<br><br>
+
 <br>
     
 <br><br>
@@ -713,6 +731,51 @@ function deleteSetlist(index){
 
     showSavedSetlists();
 
+}
+
+function addSettingRow(){
+
+let table =
+document.getElementById("settingTable");
+
+let row = table.insertRow(-1);
+
+row.innerHTML = `
+<td>
+<input type="text"
+class="songName"
+placeholder="曲名">
+</td>
+
+<td>
+<select class="songMode">
+
+<option value="fixed">
+必ず入れる
+</option>
+
+<option value="exclude">
+除外
+</option>
+
+<option value="position">
+位置固定
+</option>
+
+</select>
+</td>
+
+<td>
+<input type="text"
+class="songPosition"
+placeholder="本編1">
+</td>
+`;
+
+}
+
+for(let i=0;i<5;i++){
+addSettingRow();
 }
     
 </script>
