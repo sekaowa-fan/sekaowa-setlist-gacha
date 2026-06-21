@@ -77,6 +77,35 @@ summary{
 summary::-webkit-details-marker{
     display:none;
 }
+
+.settingCard{
+    background:rgba(255,255,255,0.05);
+    border-radius:15px;
+    padding:15px;
+    margin:15px 0;
+}
+
+.settingCard label{
+    display:block;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+.settingCard input,
+.settingCard select{
+    width:100%;
+    box-sizing:border-box;
+    font-size:18px;
+    padding:8px;
+    border-radius:10px;
+}
+
+.deleteBtn{
+    margin-top:10px;
+    background:#ff5555;
+    box-shadow:none;
+    padding:8px 15px;
+}
 </style>
 </head>
 
@@ -127,10 +156,7 @@ summary::-webkit-details-marker{
 <tr>
 <th>曲名</th>
 <th>モード</th>
-<th>位置</th>
-</tr>
-
-</table>
+<div id="settingArea"></div>
 
 <br>
 
@@ -735,20 +761,26 @@ function deleteSetlist(index){
 
 function addSettingRow(){
 
-let table =
-document.getElementById("settingTable");
+let area =
+document.getElementById("settingArea");
 
-let row = table.insertRow(-1);
+let card =
+document.createElement("div");
 
-row.innerHTML = `
-<td>
-<input type="text"
+card.className = "settingCard";
+
+card.innerHTML = `
+
+<label>曲名</label>
+<input
+type="text"
 class="songName"
 placeholder="曲名">
-</td>
 
-<td>
-<select class="songMode">
+<label>モード</label>
+<select
+class="songMode"
+onchange="togglePosition(this)">
 
 <option value="fixed">
 必ず入れる
@@ -763,20 +795,59 @@ placeholder="曲名">
 </option>
 
 </select>
-</td>
 
-<td>
-<input type="text"
+<div class="positionArea"
+style="display:none;">
+
+<label>位置</label>
+
+<input
+type="text"
 class="songPosition"
 placeholder="本編1">
-</td>
+
+</div>
+
+<button
+type="button"
+class="deleteBtn"
+onclick="this.parentElement.remove()">
+
+🗑️削除
+
+</button>
+
 `;
+
+area.appendChild(card);
 
 }
 
 for(let i=0;i<5;i++){
 addSettingRow();
 }
+
+function togglePosition(select){
+
+let card =
+select.closest(".settingCard");
+
+let positionArea =
+card.querySelector(".positionArea");
+
+if(select.value === "position"){
+
+    positionArea.style.display =
+    "block";
+
+}else{
+
+    positionArea.style.display =
+    "none";
+
+}
+
+    }
     
 </script>
 
