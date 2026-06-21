@@ -453,91 +453,6 @@ function generateSetlist(){
         "登録曲数が足りません。";
         return;
     }
-
-function saveSetlist(){
-
-    if(currentSetlist === ""){
-
-        alert("保存するセトリがありません");
-
-        return;
-    }
-
-    let saved = JSON.parse(
-        localStorage.getItem("savedSetlists")
-        || "[]"
-    );
-
-    let title = prompt(
-        "セトリ名を入力してください"
-    );
-
-    if(!title){
-
-        let firstSong =
-        currentSetlist.match(
-        /\d+\.\s(.+?)<br>/
-        );
-
-        title = firstSong
-        ? firstSong[1] + "始まり"
-        : "無題のセトリ";
-
-    }
-
-    saved.push({
-
-        title:title,
-
-        date:new Date().toLocaleString(),
-
-        setlist:currentSetlist
-
-    });
-
-    localStorage.setItem(
-        "savedSetlists",
-        JSON.stringify(saved)
-    );
-
-    alert("保存しました！");
-}
-
-function showSavedSetlists(){
-
-    let saved = JSON.parse(
-        localStorage.getItem("savedSetlists")
-        || "[]"
-    );
-
-    if(saved.length === 0){
-
-        alert("保存されたセトリはありません");
-
-        return;
-    }
-
-    let html =
-    "<h2>📚 保存済みセトリ</h2>";
-
-    saved.forEach((item,index)=>{
-
-        html += `
-        <hr>
-        <h3>${item.title}</h3>
-
-        ${item.date}
-
-        <br><br>
-
-        ${item.setlist}
-        `;
-
-    });
-
-    document.getElementById("result")
-    .innerHTML = html;
-}
     
 let pool=[...songs];
 
@@ -689,6 +604,91 @@ let timer = setInterval(() => {
 }, 100);
 }
 
+function saveSetlist(){
+
+    if(currentSetlist === ""){
+
+        alert("保存するセトリがありません");
+
+        return;
+    }
+
+    let saved = JSON.parse(
+        localStorage.getItem("savedSetlists")
+        || "[]"
+    );
+
+    let title = prompt(
+        "セトリ名を入力してください"
+    );
+
+    if(!title){
+
+        let firstSong =
+        currentSetlist.match(
+        /\d+\.\s(.+?)<br>/
+        );
+
+        title = firstSong
+        ? firstSong[1] + "始まり"
+        : "無題のセトリ";
+
+    }
+
+    saved.push({
+
+        title:title,
+
+        date:new Date().toLocaleString(),
+
+        setlist:currentSetlist
+
+    });
+
+    localStorage.setItem(
+        "savedSetlists",
+        JSON.stringify(saved)
+    );
+
+    alert("保存しました！");
+            }
+
+function showSavedSetlists(){
+
+    let saved = JSON.parse(
+        localStorage.getItem("savedSetlists")
+        || "[]"
+    );
+
+    if(saved.length === 0){
+
+        alert("保存されたセトリはありません");
+
+        return;
+    }
+
+    let html =
+    "<h2>📚 保存済みセトリ</h2>";
+
+    saved.forEach((item,index)=>{
+
+        html += `
+        <hr>
+        <h3>${item.title}</h3>
+
+        ${item.date}
+
+        <br><br>
+
+        ${item.setlist}
+        `;
+
+    });
+
+    document.getElementById("result")
+    .innerHTML = html;
+}
+    
 </script>
 
 </body>
